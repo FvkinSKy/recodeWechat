@@ -16,6 +16,25 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
-<!--Spring配置-->
 
+    <!--quarz配置 start-->
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.zr.wechatProj.autoTask.WeChatAutoTask"></property>
+    </bean>
+
+    <!--触发器-->
+    <bean id="cornTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobDetail"></property>
+        <!--触发间隔-->
+        <property name="cronExpression" value="0 0 0/1 * * ? "></property>
+        <!--测试，1分钟一次
+                <property name="cronExpression" value="0 0/1 * * * ?"></property>
+        -->
+    </bean>
+
+    <!--任务调度器-->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers" ref="cornTrigger"></property>
+    </bean>
+    <!--quarz配置 end-->
 </beans>
