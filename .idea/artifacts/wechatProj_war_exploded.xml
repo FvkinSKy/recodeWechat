@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="wechatProj:war exploded">
-    <output-path>$PROJECT_DIR$/../recodeWechat/wechatProj/target/wechatProj</output-path>
+    <output-path>$PROJECT_DIR$/wechatProj/target/wechatProj</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -15,7 +15,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.2.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-test:4.2.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.2.6.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.2.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context-support:4.2.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.2.6.RELEASE" />
           <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
@@ -45,7 +45,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/../recodeWechat/wechatProj/target/wechatProj/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/wechatProj/target/wechatProj/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="wechatProj/web/Web" />
     </root>

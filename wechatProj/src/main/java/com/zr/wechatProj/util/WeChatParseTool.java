@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import sun.rmi.runtime.Log;
 
 import java.util.HashMap;
 import java.util.Iterator;
