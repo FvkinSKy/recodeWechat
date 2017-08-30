@@ -6,9 +6,12 @@ import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 
@@ -38,6 +41,11 @@ public class WeChatApiTool {
      * 图灵机器人API url
      */
     private static final String ROBOT_URL = "http://www.tuling123.com/openapi/api?key=a4500591896d4848a709cd5ab85dacf2&info=";
+
+    /**
+     * 微信菜单API url
+     */
+    private static final String MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create";
 
     private static Logger log = Logger.getLogger(WeChatApiTool.class);
 
@@ -74,11 +82,13 @@ public class WeChatApiTool {
      */
     public static String getAccessToken() {
         String access_token = "";
+        StringBuilder url = new StringBuilder();
         try {
-            String param = "grant_type=" + GRANT_TYPE + "&appid=" + APPID + "&secret=" + SECRET + "";
             CloseableHttpResponse response = null;
+            url.append(TOKEN_URL).append("grant_type=").append(GRANT_TYPE).append("&appid=").append(APPID)
+                    .append("&secret=").append(SECRET).append("");
             //发送HTTPGET请求
-            HttpGet httpGet = new HttpGet(TOKEN_URL + param);
+            HttpGet httpGet = new HttpGet(url.toString());
             response = HttpClients.createDefault().execute(httpGet);
             //获取返回值
             access_token = EntityUtils.toString(response.getEntity());
@@ -87,5 +97,38 @@ public class WeChatApiTool {
             log.error("获取access_token失败" + e);
         }
         return access_token;
+    }
+
+    /**
+     * 调用接口创建菜单
+     *
+     * @param access_token
+     * @return
+     */
+    public static boolean buildMenu(String menu, String access_token) {
+        StringBuilder url = new StringBuilder();
+        try {
+            if (!StringUtils.isEmpty(access_token)) {
+                url.append(MENU_URL).append("?access_token=").append(access_token);
+                HttpPost httpPost = new HttpPost(url.toString());
+                //参数
+                httpPost.setEntity(new StringEntity(menu, "UTF-8"));
+                //获取响应
+                CloseableHttpResponse response = HttpClients.createDefault().execute(httpPost);
+                HttpEntity httpEntityentity = response.getEntity();
+                String result = EntityUtils.toString(httpEntityentity);
+                JSONObject jsonObject = JSON.parseObject(result);
+                return (String.valueOf(jsonObject.get("errcode")).equals("0"));
+            } else {
+                log.error("菜单创建失败,access_token为空");
+                throw new RuntimeException("菜单创建失败,access_token为空");
+            }
+        } catch (ClientProtocolException e) {
+            log.error("菜单创建失败,协议错误");
+            throw new RuntimeException("菜单创建失败,协议错误");
+        } catch (IOException e) {
+            log.error("菜单创建失败,IO异常");
+            throw new RuntimeException("菜单创建失败,IO异常");
+        }
     }
 }

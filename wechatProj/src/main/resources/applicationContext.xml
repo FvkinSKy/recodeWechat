@@ -37,4 +37,42 @@
         <property name="triggers" ref="cornTrigger"></property>
     </bean>
     <!--quarz配置 end-->
+
+    <!--dataSource start-->
+    <bean id="dbcp" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="username" value="root"/>
+        <property name="password" value="root123"/>
+        <property name="url"
+                  value="jdbc:mysql://120.77.200.193:3306/mybatis?useUnicode=true&amp;characterEncoding=utf8"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <!--连接初始值-->
+        <property name="initialSize" value="3"/>
+        <!--最小空闲值-->
+        <property name="minIdle" value="3"/>
+        <!--最大空闲值-->
+        <property name="maxIdle" value="5"/>
+        <!--连接池最大值-->
+        <property name="maxTotal" value="15"/>
+    </bean>
+    <!--dataSource end-->
+
+    <!--mybatis start-->
+    <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dbcp"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--指定Dao所在的包-->
+        <property name="basePackage" value="com.zr.wechatProj.dao"/>
+    </bean>
+    <!--mybatis end-->
+
+    <!--事物控制-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dbcp"/>
+    </bean>
+
+    <!--@Transactional注解配置-->
+    <tx:annotation-driven transaction-manager="txManager"/>
 </beans>

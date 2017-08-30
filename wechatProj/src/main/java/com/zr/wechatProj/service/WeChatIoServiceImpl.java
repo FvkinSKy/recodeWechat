@@ -20,11 +20,13 @@ public class WeChatIoServiceImpl implements WeChatIoService {
     //图片消息
     private static final String IMAGE_TYPE = "image";
 
-    /**消息处理
-    * @param map
-    * @return
-    * @exception
-    */
+    /**
+     * 消息处理
+     *
+     * @param map
+     * @return
+     * @throws
+     */
     @Override
     public String msgHandler(Map<String, String> map) throws Exception {
         String fromUserName = map.get("FromUserName");
