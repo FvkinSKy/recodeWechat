@@ -23,18 +23,23 @@
     </bean>
 
     <!--触发器-->
-    <bean id="cornTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <!--<bean id="cornTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="jobDetail"></property>
-        <!--触发间隔-->
+        &lt;!&ndash;触发间隔&ndash;&gt;
         <property name="cronExpression" value="0 0 0/1 * * ? "></property>
-        <!--测试，1分钟一次
+        &lt;!&ndash;测试，1分钟一次
                 <property name="cronExpression" value="0 0/1 * * * ?"></property>
-        -->
+        &ndash;&gt;
+    </bean>-->
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="jobDetail"/>
+        <property name="startDelay" value="1000"/>
+        <property name="repeatInterval" value="90000"/>
     </bean>
 
     <!--任务调度器-->
     <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers" ref="cornTrigger"></property>
+        <property name="triggers" ref="simpleTrigger"></property>
     </bean>
     <!--quarz配置 end-->
 
@@ -43,7 +48,7 @@
         <property name="username" value="root"/>
         <property name="password" value="root123"/>
         <property name="url"
-                  value="jdbc:mysql://120.77.200.193:3306/mybatis?useUnicode=true&amp;characterEncoding=utf8"/>
+                  value="jdbc:mysql://120.77.200.193:3306/wechat?useUnicode=true&amp;characterEncoding=utf8"/>
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <!--连接初始值-->
         <property name="initialSize" value="3"/>
