@@ -27,6 +27,7 @@ public class WeChatAutoTask extends QuartzJobBean {
      * 定时获取access_token
      */
     private boolean work() {
+        System.out.print("123");
         count++;
         log.info("开始获取access_token:" + new Date());
         String accessToken = WeChatApiTool.getAccessToken();
