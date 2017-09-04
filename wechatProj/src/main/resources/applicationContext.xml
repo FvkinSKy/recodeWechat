@@ -62,15 +62,15 @@
     <!--dataSource end-->
 
     <!--mybatis start-->
-    <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!--<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dbcp"/>
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!--指定Dao所在的包-->
+        &lt;!&ndash;指定Dao所在的包&ndash;&gt;
         <property name="basePackage" value="com.zr.wechatProj.dao"/>
-    </bean>
+    </bean>-->
     <!--mybatis end-->
 
     <!--事物控制-->
